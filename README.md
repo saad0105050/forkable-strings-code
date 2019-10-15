@@ -1,21 +1,24 @@
-# forkable-strings-code
-Compute the relative margin in polynomial time and space
+# Settlement violation estimates for proof-of-stake blockchains with the longest-chain rule
+Compute the relative margin in polynomial time and space. 
+See Appendix A of [the paper](https://eprint.iacr.org/2017/241.pdf) for reference.
 
-# usage
+## Author
+Saad Quader and Alexander Russell
 
-# description
-The programe takes the following as input:
-* A sequence of positive integers n1, n2, ..., n_k, separated by space.
-* A sequence of positive reals a1, a2, ..., a_m.
+## Description
+The code is in C++. There following files should be built as executables:
+* `forkability_table.cpp` 
+* `prob_forkable.cpp`
 
-Let N = max{ n_1, ..., n_k } and let A = {alpha}
-Let B(n, a) denote the binomial distribution with parameters n and a.
-Let mu_x(y) be the relative margin
+Look at the comments around the `main()` function in each file. They are fairly self-explanatory. 
 
-Our program essentially does the following:
+The file `prob_forkable.cpp`, when built into an executable, produces an interactive program. It asks for
+* `N`, a positive integer, the length of the characteristic string `w = w_1 ... w_N` 
+* `R`, a positive integer, the maximum reach allowed in computation, and 
+* `eps`, a real between 0 and 1, so that `Pr[w_i = 1] = (1 - eps)/2` independently for each `i = 1, ... , N`.
+It outputs an upper bound on `Pr[w is forkable]`.
 
-for each n in { n_1, ..., n_k } do
-	for each a in A do
-		output Pr[mu_x(y) >= 0] where y ~ B(n, a)
-	end for
-end for
+The file `forkability_table.cpp`, when built into an executable, does not take any command line input. It is an interactive program which requests an output file name and then reproduce the table in Appendix A of [the paper](https://eprint.iacr.org/2017/241.pdf). Look in the `main()` function to see which values of `N`, `eps`, and `R` are being used.
+
+
+If building on Windows, the header `win_mem_leak.h` helps detect memory leak, if any.
